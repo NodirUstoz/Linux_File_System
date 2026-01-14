@@ -15,7 +15,6 @@
 | | |
 |---|---|
 | **👨‍🏫 Muallif** | Nodir Ustoz |
-| **📱 Telegram** | [@Nodir_Odilov](https://t.me/Nodir_Odilov) |
 | **📊 Daraja** | Boshlang'ich - O'rta |
 | **🎯 Maqsad** | Linux fayl tizimini chuqur o'rganish va CTF musobaqalariga tayyorgarlik |
 | **⏱ O'qish vaqti** | ~45 daqiqa |
@@ -74,13 +73,307 @@ flag{kichik_harflar}
 
 ### 1.4 Terminal va shell
 
-**Terminal** - bu matn asosidagi interfeys oynasi.
+Terminal va shell'ni tushunish Linux bilan ishlashning asosidir. Bu ikki komponent birgalikda ishlab, kuchli buyruq qatori interfeysini ta'minlaydi.
 
-**Shell** - bu buyruqlarni qayta ishlaydigan dastur. Mashhur shell'lar:
-- **Bash** (Bourne Again Shell) - eng keng tarqalgan
-- **Zsh** - zamonaviy imkoniyatlar bilan
-- **Fish** - foydalanuvchiga qulay
-- **sh** - asl Bourne shell
+#### 1.4.1 Terminal nima?
+
+**Terminal** (terminal emulyatori deb ham ataladi) - bu operatsion tizim bilan matn buyruqlari orqali muloqot qilish usulini ta'minlaydigan matn asosidagi interfeys oynasi. Bu mainframe kompyuterlarga ulanish uchun ishlatilgan jismoniy terminallarning zamonaviy ekvivalentidir.
+
+**Asosiy xususiyatlar:**
+- Matn asosidagi kirish va chiqish
+- Buyruq qatori interfeysi (CLI)
+- Bir nechta shell'larni ishga tushirish mumkin
+- Ranglar, shriftlar va sozlashlarni qo'llab-quvvatlaydi
+- Tizim resurslariga kirishni ta'minlaydi
+
+**Mashhur terminal emulyatorlari:**
+- **GNOME Terminal** - GNOME desktop muhitida standart
+- **Konsole** - KDE terminal emulyatori
+- **Terminal.app** - macOS standart terminali
+- **Windows Terminal** - Zamonaviy Windows terminali
+- **Alacritty** - Tez, GPU-accelerated terminal
+- **iTerm2** - Rivojlangan macOS terminali
+
+**Terminal vs Console:**
+- **Terminal**: Jismoniy terminalni emulyatsiya qiladigan dastur (dasturiy ta'minot)
+- **Console**: Jismoniy qurilma yoki tizim konsoli (apparat ta'minot)
+
+#### 1.4.2 Shell nima?
+
+**Shell** - bu buyruqlarni qayta ishlaydigan va bajaradigan buyruq qatori interpretatori dasturi. U foydalanuvchi va operatsion tizim yadrosi o'rtasida interfeys vazifasini bajaradi. Shell terminaldan buyruqlarni o'qiydi, ularni talqin qiladi va tegishli dasturlarni bajaradi.
+
+**Shell funksiyalari:**
+- **Buyruq bajarish**: Dasturlar va skriptlarni ishga tushiradi
+- **Buyruq talqin qilish**: Buyruqlarni tahlil qiladi va qayta ishlaydi
+- **Muhit boshqaruvi**: Environment o'zgaruvchilarini boshqaradi
+- **Skriptlash**: Shell skriptlari orqali avtomatlashtirish imkonini beradi
+- **Ish boshqaruvi**: Orqa fondagi processlarni boshqaradi
+- **Kirish/chiqish yo'naltirish**: Pipe va redirectionlarni boshqaradi
+
+**Shell qanday ishlaydi:**
+```
+Foydalanuvchi kiritishi → Terminal → Shell → Kernel → System calls → Hardware
+         ↑                                                      ↓
+         └────────── Chiqish ←──────────────────────────────────┘
+```
+
+#### 1.4.3 Mashhur shell'lar
+
+##### Bash (Bourne Again Shell)
+
+**Bash** - Linux tizimlarida eng keng qo'llaniladigan shell va ko'pchilik distributivlarda standart shell.
+
+**Imkoniyatlar:**
+- Arrow tugmalari bilan buyruq tarixi
+- Buyruqlar va fayl nomlari uchun Tab completion
+- Buyruq aliases
+- Environment o'zgaruvchilarini kengaytirish
+- Kuchli skriptlash imkoniyatlari
+- Ish boshqaruvi (orqa fondagi processlar)
+- Brace expansion (`{1..10}`)
+- Buyruq almashtirish (`$(command)`)
+
+**Shellingizni tekshirish:**
+```bash
+echo $SHELL                    # Joriy shell yo'li
+echo $0                        # Shell nomi
+ps -p $$                       # Process ma'lumotlari
+```
+
+**Bash versiyasi:**
+```bash
+bash --version
+# Natija: GNU bash, version 5.1.16(1)-release (x86_64-pc-linux-gnu)
+```
+
+**Bash konfiguratsiya fayllari:**
+- `~/.bashrc` - Interaktiv non-login shell konfiguratsiyasi
+- `~/.bash_profile` - Login shell konfiguratsiyasi
+- `~/.bash_history` - Buyruq tarixi
+- `/etc/bash.bashrc` - Tizim bo'ylab konfiguratsiya
+
+##### Zsh (Z Shell)
+
+**Zsh** - zamonaviy imkoniyatlarga ega kuchli shell, dasturchilar orasida mashhur.
+
+**Imkoniyatlar:**
+- Rivojlangan tab completion
+- Yaxshilangan globbing (pattern matching)
+- Plugin tizimi (Oh My Zsh framework)
+- Imlo tuzatish
+- Tema qo'llab-quvvatlash
+- Umumiy buyruq tarixi
+- Yaxshilangan array boshqaruvi
+
+**O'rnatish:**
+```bash
+# Debian/Ubuntu
+sudo apt install zsh
+
+# CentOS/RHEL
+sudo yum install zsh
+
+# macOS
+brew install zsh
+```
+
+**Zsh'ni standart qilish:**
+```bash
+chsh -s $(which zsh)
+```
+
+**Mashhur Zsh frameworklari:**
+- **Oh My Zsh** - Jamiyat tomonidan yaratilgan framework
+- **Prezto** - Konfiguratsiya frameworki
+- **Powerlevel10k** - Tez tema
+
+##### Fish (Friendly Interactive Shell)
+
+**Fish** - foydalanuvchiga qulay bo'lishi uchun yaratilgan, sintaksis highlighting va avto-takliflar bilan.
+
+**Imkoniyatlar:**
+- Yozayotganda sintaksis highlighting
+- Tarixga asoslangan avtomatik takliflar
+- Web asosidagi konfiguratsiya
+- Oqilona default sozlamalar (konfiguratsiya kerak emas)
+- Yaxshilangan xato xabarlari
+- Tavsiflar bilan tab completion
+
+**O'rnatish:**
+```bash
+# Debian/Ubuntu
+sudo apt install fish
+
+# macOS
+brew install fish
+```
+
+**Fish konfiguratsiyasi:**
+```bash
+fish_config                    # Web asosidagi konfiguratsiyani ochadi
+```
+
+##### sh (Bourne Shell)
+
+**sh** - asl Unix shell, endi ko'pincha boshqa shell'ga simvolik havola (masalan, Debian/Ubuntu'da dash).
+
+**Xususiyatlar:**
+- POSIX-compliant
+- Minimal imkoniyatlar
+- Tez ishga tushish
+- Tizim skriptlari uchun ishlatiladi
+- Asosiy funksionallik
+
+**Eslatma:** Ko'p tizimlar skriptlarni tezroq bajarish uchun `/bin/sh` sifatida `dash` (Debian Almquist Shell) dan foydalanadi.
+
+#### 1.4.4 Shell turlari: Login vs Non-Login
+
+**Login Shell:**
+- Tizimga kirganda ishga tushadi (SSH, konsol kirish)
+- O'qiydi: `/etc/profile`, `~/.bash_profile` yoki `~/.profile`
+- To'liq muhit sozlash
+
+**Non-Login Shell:**
+- GUI terminal yoki `bash` buyrug'idan ishga tushadi
+- O'qiydi: `~/.bashrc` yoki `/etc/bash.bashrc`
+- Tez ishga tushish
+
+**Shell turini tekshirish:**
+```bash
+echo $0                        # Shell nomini ko'rsatadi
+shopt -q login_shell && echo "Login shell" || echo "Non-login shell"
+```
+
+#### 1.4.5 Interaktiv vs Non-interaktiv Shell
+
+**Interaktiv Shell:**
+- Foydalanuvchi buyruqlar kiritishi mumkin
+- Prompt ko'rsatiladi
+- Terminaldan o'qiydi
+- Misol: Terminal oynasini ochish
+
+**Non-interaktiv Shell:**
+- Skriptlarni ishga tushiradi
+- Prompt yo'q
+- Fayl yoki pipe'dan o'qiydi
+- Misol: `bash script.sh`
+
+**Interaktivlikni tekshirish:**
+```bash
+[ -t 0 ] && echo "Interaktiv" || echo "Non-interaktiv"
+```
+
+#### 1.4.6 Shell imkoniyatlari va funksiyalari
+
+**Buyruq tarixi:**
+```bash
+history                        # Buyruq tarixini ko'rish
+!!                             # Oxirgi buyruqni takrorlash
+!n                             # n raqamli buyruqni bajarish
+!string                        # string bilan boshlanadigan oxirgi buyruqni bajarish
+Ctrl+R                         # Tarixda interaktiv qidirish
+```
+
+**Tab Completion:**
+- **Bitta Tab**: Noyob bo'lsa to'ldiradi
+- **Ikki marta Tab**: Barcha imkoniyatlarni ko'rsatadi
+- Buyruqlar, fayllar va kataloglar uchun ishlaydi
+
+**Aliases:**
+```bash
+alias ll='ls -la'              # Alias yaratish
+alias grep='grep --color=auto' # Rangli grep
+unalias ll                     # Alias'ni olib tashlash
+alias                          # Barcha alias'larni ro'yxatga olish
+```
+
+**Environment o'zgaruvchilar:**
+```bash
+export PATH=$PATH:/new/path    # PATH'ga qo'shish
+echo $HOME                     # O'zgaruvchini ko'rsatish
+env                            # Barcha o'zgaruvchilarni ro'yxatga olish
+set                            # Barcha o'zgaruvchilar va funksiyalarni ro'yxatga olish
+```
+
+**Kirish/chiqish yo'naltirish:**
+```bash
+command > file                 # stdout'ni yo'naltirish
+command >> file                # stdout'ga qo'shish
+command < file                 # stdin'ni yo'naltirish
+command 2> error.log           # stderr'ni yo'naltirish
+command > file 2>&1            # Ikkalasini ham yo'naltirish
+command | another              # Chiqishni pipe qilish
+```
+
+#### 1.4.7 To'g'ri shell'ni tanlash
+
+**Boshlang'ich uchun:**
+- **Bash** - Standart, yaxshi hujjatlashtirilgan, keng qo'llab-quvvatlanadi
+- **Fish** - Foydalanuvchiga qulay, o'rganish uchun ajoyib
+
+**Dasturchilar uchun:**
+- **Zsh** - Kuchli, kengaytiriladigan, zamonaviy imkoniyatlar
+- **Bash** - Universal, hamma joyda ishlaydi
+
+**Tizim skriptlari uchun:**
+- **sh** - POSIX-compliant, tez, portativ
+
+**CTF/Musobaqalar uchun:**
+- **Bash** - Hamm joyda mavjud, bilish zarur
+
+#### 1.4.8 Amaliy misollar
+
+**Vaqtinchalik shell'larni almashtirish:**
+```bash
+bash                           # Bash'ga o'tish
+zsh                            # Zsh'ga o'tish
+fish                           # Fish'ga o'tish
+exit                           # Oldingi shell'ga qaytish
+```
+
+**Turli shell'larda buyruqlarni ishga tushirish:**
+```bash
+bash -c "echo 'Bash'dan salom'"
+zsh -c "echo 'Zsh'dan salom'"
+sh -c "echo 'sh'dan salom'"
+```
+
+**Shell skript shebang:**
+```bash
+#!/bin/bash                    # Bash'dan foydalanish
+#!/bin/sh                      # sh'dan foydalanish (portativ)
+#!/usr/bin/env bash            # PATH'dan bash'dan foydalanish
+```
+
+#### 1.4.9 Terminal va shell maslahatlari
+
+**Terminal maslahatlari:**
+- Yangi tablarni ochish uchun `Ctrl+Shift+T` ishlating (ko'pchilik terminallar)
+- Nusxalash uchun `Ctrl+Shift+C` ishlating (ko'pchilik terminallar)
+- Qo'yish uchun `Ctrl+Shift+V` ishlating (ko'pchilik terminallar)
+- Yaxshi o'qilishi uchun ranglar va shriftlarni sozlang
+- Sessiyalar uchun terminal multiplexorlardan (tmux, screen) foydalaning
+
+**Shell maslahatlari:**
+- Klaviatura qisqa yo'llarini o'rganing (`Ctrl+A`, `Ctrl+E`, `Ctrl+U`, `Ctrl+K`)
+- Tab completion'dan keng foydalaning
+- Tez-tez ishlatiladigan buyruqlar uchun foydali alias'lar yarating
+- `.bashrc` yoki `.zshrc`'ingizni tartibli saqlang
+- Murakkab operatsiyalar uchun funksiyalardan foydalaning
+
+**Asosiy klaviatura qisqa yo'llari:**
+- `Ctrl+C` - Joriy buyruqni to'xtatish
+- `Ctrl+D` - Shell'dan chiqish (EOF)
+- `Ctrl+L` - Ekranni tozalash
+- `Ctrl+A` - Qator boshiga o'tish
+- `Ctrl+E` - Qator oxiriga o'tish
+- `Ctrl+U` - Qator boshigacha o'chirish
+- `Ctrl+K` - Qator oxirigacha o'chirish
+- `Ctrl+W` - Oldingi so'zni o'chirish
+- `Alt+.` - Oldingi buyruqning oxirgi argumentini kiritish
+- `Ctrl+R` - Buyruq tarixida qidirish
+
+> **Professional maslahat:** Terminal va shell'ni tushunish Linux'da mahorat uchun juda muhim. Turli shell'lar bilan mashq qilish va muhitingizni sozlashga vaqt ajrating. CTF musobaqalari uchun Bash zarur, chunki u deyarli har bir Linux tizimida mavjud.
 
 ---
 
